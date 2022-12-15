@@ -1,19 +1,19 @@
-var searchInput = document.querySelector('.search');
-var cardWrapper = document.querySelector('main');
+var searchInput = $('.search');
+var cardWrapper = $('main');
 
 function noMatch() {
-    cardWrapper.innerHTML = '<p class="no-search">No results found.</p>';
+    cardWrapper.html('<p class="no-search">No results found.</p>');
 };
 
 function displayMatches(matches){
 
-    cardWrapper.innerHTML = '';
+    cardWrapper.html('');
 
     if (!matches) {
         noMatch();
     } else {
         for (var matchObj of matches){
-            cardWrapper.insertAdjacentHTML('beforeend', `
+            cardWrapper.append(`
                 <div class="movie-card" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(${matchObj.Poster})">
                     <h3>${matchObj.Title}</h3>
                     <p>Release Year: ${matchObj.Year}</p>
@@ -29,7 +29,7 @@ function displayMatches(matches){
 function fetchMovies (event) {
     var keyCode = event.keyCode;
     //make data lowercase and trims out spaces
-    var searchText = searchInput.value.toLowerCase().trim();
+    var searchText = searchInput.val().trim();
 
     // console.log(searchText);
 
@@ -55,7 +55,17 @@ function fetchMovies (event) {
         //         });
         // );
 
-        var responsePromise = fetch(`https://www.omdbapi.com/?apikey=20dc4c7f&s=${searchText}`);
+        $.get(`https://www.omdbapi.com/?apikey=20dc4c7f&s=${searchText}`)
+          .then(function (data){
+                // if (!data.length){
+                    // noMatch();
+                
+                // } else {
+                    console.log(data.Search);
+                    displayMatches(data.Search);
+                    searchInput.val('');
+                // };
+            });;
 
     //     responsePromise.then(function(responseObj) {
 
@@ -67,26 +77,6 @@ function fetchMovies (event) {
     //             onsole.log(data);
     //         });
     //     });
-
-        function handleResponse(responseObj){
-            return responseObj.json();
-        };
-
-        responsePromise
-            .then(handleResponse)
-            .then(function (data){
-                // if (!data.length){
-                    // noMatch();
-                
-                // } else {
-                    console.log(data.Search);
-                    displayMatches(data.Search);
-                    searchInput.value = '';
-                // };
-            });
-         
-
-
     };
 
     // searchInput.value = '';
@@ -96,7 +86,7 @@ function fetchMovies (event) {
 
 
 function init () {
-    searchInput.addEventListener('keydown', fetchMovies);
+    searchInput.keydown(fetchMovies);
 }
 
 init()
