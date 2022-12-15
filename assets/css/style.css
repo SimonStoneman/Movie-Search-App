@@ -1,0 +1,101 @@
+/* Variables */
+:root {
+    --blue: #048ba8;
+    --orange: #F18F01;
+}
+
+/* Resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: board-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+/* Global Classes */
+
+.text-center {
+    text-align: center;
+}
+
+.row, .column {
+    display:flex
+
+}
+
+.column {
+    flex-direction: column;
+}
+
+h1.main-header {
+    margin: 20px 0 25px;
+    color: var(--blue);
+}
+
+input.search {
+    padding: 8px 15px;
+    width: 350px;
+    border-radius: 10px;
+    border: 1px solid var(--blue);
+    outline: none;
+    margin-bottom: 35px;
+}
+
+input.search::placeholder {
+    color: var(--blue);
+    text-align: center;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0px 15px;
+}
+
+main .movie-card {
+    padding: 20px;
+    border: 2px solid var(--blue);
+    border-radius: 5px;;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+}
+
+/* will target direct children (>) of class movie-card, '*' means all*/
+main .movie-card > *:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+main .movie-card h3 {
+    font-size: 1rem;
+}
+
+main .movie-card p {
+    font-size: .9rem;
+}
+
+main .movie-card a {
+    color: var(--orange);
+    font-size: .8rem;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--orange);
+}
+
+/* MEDIA STYLES */
+@media (max-width: 768px){
+   main{
+    grid-template-columns: repeat(2, 1fr);
+   }; 
+}
